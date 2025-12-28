@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "buildCommand": "cd pokemon-card-analyzer && npm install",
+  "outputDirectory": "pokemon-card-analyzer/public",
+  "builds": [
+    {
+      "src": "pokemon-card-analyzer/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "pokemon-card-analyzer/server.js"
+    },
+    {
+      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico|json))",
+      "dest": "pokemon-card-analyzer/public/$1"
+    },
+    {
+      "src": "/",
+      "dest": "pokemon-card-analyzer/server.js"
+    }
+  ]
+}
+

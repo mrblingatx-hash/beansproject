@@ -16,11 +16,7 @@
       "dest": "pokemon-card-analyzer/server.js"
     },
     {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico|json))",
+      "src": "/(.*)",
       "dest": "/$1"
     }
   ]

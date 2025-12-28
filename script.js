@@ -39,6 +39,9 @@ function createFloatingBean() {
     bean.style.fontSize = '2rem';
     bean.style.pointerEvents = 'none';
     bean.style.zIndex = '9999';
+    bean.style.filter = 'drop-shadow(0 0 8px rgba(139, 26, 26, 0.6))';
+    bean.style.color = '#5a0f0f';
+    bean.style.opacity = '0.8';
     
     // Random starting position near button
     const buttonRect = beanButton.getBoundingClientRect();
@@ -52,13 +55,14 @@ function createFloatingBean() {
     const randomY = -Math.random() * 300 - 100;
     const randomRotate = Math.random() * 720;
     
-    bean.style.transition = 'all 1s ease-out';
+    bean.style.transition = 'all 1.2s ease-out';
     bean.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRotate}deg) scale(0)`;
     bean.style.opacity = '0';
+    bean.style.filter = 'drop-shadow(0 0 15px rgba(160, 32, 32, 0.8))';
     
     setTimeout(() => {
         bean.remove();
-    }, 1000);
+    }, 1200);
 }
 
 // Show temporary message
@@ -69,15 +73,19 @@ function showMessage(text) {
     message.style.top = '20px';
     message.style.left = '50%';
     message.style.transform = 'translateX(-50%)';
-    message.style.background = 'linear-gradient(135deg, #8B4513, #D2691E)';
-    message.style.color = 'white';
+    message.style.background = 'linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(18, 18, 18, 0.95) 100%)';
+    message.style.color = '#e0e0e0';
     message.style.padding = '1rem 2rem';
-    message.style.borderRadius = '50px';
+    message.style.borderRadius = '8px';
     message.style.fontFamily = "'Fredoka', sans-serif";
     message.style.fontSize = '1.2rem';
     message.style.fontWeight = '600';
     message.style.zIndex = '10000';
-    message.style.boxShadow = '0 10px 30px rgba(139, 69, 19, 0.4)';
+    message.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 26, 26, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+    message.style.border = '1px solid rgba(139, 26, 26, 0.4)';
+    message.style.textShadow = '0 0 10px rgba(139, 26, 26, 0.5)';
+    message.style.letterSpacing = '0.05em';
+    message.style.textTransform = 'uppercase';
     message.style.animation = 'messageSlideIn 0.5s ease-out';
     
     document.body.appendChild(message);

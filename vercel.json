@@ -12,18 +12,8 @@
       "dest": "pokemon-card-analyzer/server.js"
     },
     {
-      "src": "/pokemon-card-analyzer/api/(.*)",
-      "dest": "pokemon-card-analyzer/server.js"
-    },
-    {
       "src": "/pokemon-card-analyzer/(.*)",
       "dest": "pokemon-card-analyzer/server.js"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
     }
   ]
 }

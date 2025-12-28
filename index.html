@@ -3,334 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon Card Analyzer - eBay Price Comparison Tool</title>
-    <link rel="stylesheet" href="pokemon-card-analyzer/public/styles.css">
+    <title>Pokemon Card Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Landing page specific overrides */
-        body {
-            background: radial-gradient(ellipse at center, #121212 0%, #0a0a0a 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .landing-container {
+        :root {
+            --primary: #0071e3;
+            --primary-hover: #0077ed;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #000000;
+            --border: rgba(0, 0, 0, 0.1);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 4rem 2rem;
-            text-align: center;
+            padding: 0 22px;
         }
 
+        /* Hero Section */
         .hero {
-            margin-bottom: 4rem;
+            text-align: center;
+            padding: 120px 0 80px;
+        }
+
+        .hero-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            margin-bottom: 1rem;
-            color: #3b82f6;
-            text-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
-            letter-spacing: -0.02em;
-        }
-
-        .hero .subtitle {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            color: #b0b0b0;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1.25rem 3rem;
-            background: linear-gradient(135deg, #1f1f1f 0%, #1a1a1a 100%);
-            color: #e0e0e0;
-            border: 2px solid rgba(59, 130, 246, 0.4);
-            border-radius: 8px;
-            font-size: 1.2rem;
+            font-size: clamp(48px, 8vw, 80px);
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.3);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin: 1rem;
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.3s forwards;
         }
 
-        .cta-button:hover {
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(59, 130, 246, 0.4);
-            background: linear-gradient(135deg, #1a1a1a 0%, rgba(59, 130, 246, 0.1) 100%);
-            transform: translateY(-3px);
+        .hero-subtitle {
+            font-size: clamp(21px, 3vw, 28px);
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 22px;
+            font-size: 17px;
+            font-weight: 400;
+            text-decoration: none;
+            border-radius: 980px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.022em;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 113, 227, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-title {
+            font-size: clamp(40px, 6vw, 56px);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            text-align: center;
+            margin-bottom: 60px;
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
+            gap: 40px;
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(18, 18, 18, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 2.5rem;
-            text-align: left;
-            transition: all 0.3s ease;
+            background: white;
+            border-radius: 18px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .feature-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.2);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+            font-size: 48px;
+            margin-bottom: 24px;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
-            color: #3b82f6;
-            margin-bottom: 1rem;
+            font-size: 24px;
             font-weight: 600;
+            letter-spacing: -0.022em;
+            margin-bottom: 12px;
         }
 
         .feature-card p {
-            color: #b0b0b0;
-            line-height: 1.8;
-            font-size: 1rem;
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.47059;
         }
 
+        /* Info Section */
+        .info-section {
+            padding: 100px 0;
+        }
+
+        .info-section.white {
+            background: white;
+        }
+
+        .info-section.gray {
+            background: var(--bg-secondary);
+        }
+
+        .info-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 21px;
+            line-height: 1.381;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list li strong {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Tech Stack */
+        .tech-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .tech-badge {
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Quick Start */
+        .quick-start {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+        }
+
+        .code-block {
+            background: var(--bg-tertiary);
+            color: white;
+            padding: 32px;
+            border-radius: 18px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 17px;
+            line-height: 1.58824;
+            overflow-x: auto;
+            margin: 40px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Status badge */
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            color: #f59e0b;
-            margin: 2rem 0;
-        }
-
-        .status-badge.active {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
-            color: #10b981;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 113, 227, 0.1);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--primary);
+            margin-top: 24px;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
             border-radius: 50%;
-            background: currentColor;
             animation: pulse 2s ease-in-out infinite;
-        }
-
-        .status-badge.active .status-dot {
-            animation: none;
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-
-        .info-section {
-            background: linear-gradient(135deg, rgba(18, 18, 18, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 3rem;
-            margin: 4rem 0;
-            text-align: left;
-        }
-
-        .info-section h2 {
-            font-size: 2rem;
-            color: #e0e0e0;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .info-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .info-section li {
-            padding: 1rem;
-            margin: 0.5rem 0;
-            background: rgba(26, 26, 26, 0.5);
-            border-radius: 8px;
-            border-left: 3px solid #3b82f6;
-            color: #b0b0b0;
-        }
-
-        .info-section li::before {
-            content: "✓ ";
-            color: #10b981;
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0;
-        }
-
-        .tech-badge {
-            padding: 0.5rem 1rem;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 20px;
-            color: #3b82f6;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .landing-container {
-                padding: 2rem 1rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-button {
-                display: block;
-                margin: 1rem 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="landing-container">
-        <div class="hero">
-            <h1>⚡ Pokemon Card Analyzer</h1>
-            <p class="subtitle">Analyze eBay listings to optimize your bulk card sales strategy</p>
-            
-            <div class="status-badge" id="statusBadge">
+    <div class="container">
+        <section class="hero">
+            <div class="hero-icon">⚡</div>
+            <h1>Pokemon Card Analyzer</h1>
+            <p class="hero-subtitle">
+                Analyze eBay listings. Compare prices. Optimize your sales.
+            </p>
+            <div class="status-badge">
                 <span class="status-dot"></span>
-                <span>Ready to use with mock data - Configure API for real eBay listings</span>
+                <span>Ready to use with mock data</span>
             </div>
-
-            <div>
-                <a href="/pokemon-card-analyzer" class="cta-button">Launch Application</a>
+            <div class="cta-buttons">
+                <a href="/pokemon-card-analyzer" class="btn btn-primary">Launch App</a>
                 <a href="https://github.com/mrblingatx-hash/beansproject/tree/main/pokemon-card-analyzer" 
-                   class="cta-button" 
-                   target="_blank" 
-                   style="background: rgba(26, 26, 26, 0.5); border-color: rgba(255, 255, 255, 0.2);">
-                    View on GitHub
-                </a>
+                   class="btn btn-secondary" target="_blank">View on GitHub</a>
+            </div>
+        </section>
+    </div>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Everything you need</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Inventory Management</h3>
+                    <p>Track your collection with detailed information and easy organization.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>eBay Search</h3>
+                    <p>Find "Pick Your Card" listings and analyze market data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Price Analysis</h3>
+                    <p>Compare your cards against current market listings.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Smart Recommendations</h3>
+                    <p>Get pricing suggestions based on market analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Beautiful Interface</h3>
+                    <p>Clean, modern design that's a joy to use.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Easy Setup</h3>
+                    <p>Works immediately with mock data. Add API when ready.</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📦</div>
-                <h3>Inventory Management</h3>
-                <p>Track your Pokemon card collection with detailed information including set, quantity, condition, and notes. Organize and filter your cards effortlessly.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🔍</div>
-                <h3>eBay Search Integration</h3>
-                <p>Search for "Pick Your Card" listings on eBay. View listing details, card variations, and pricing data to understand the market.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Price Analysis</h3>
-                <p>Compare your inventory against current eBay listings. Get pricing recommendations based on market averages and price ranges.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">💰</div>
-                <h3>Pricing Recommendations</h3>
-                <p>Receive intelligent pricing suggestions for your cards. See market averages, price ranges, and confidence levels to optimize your sales.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h3>Modern Interface</h3>
-                <p>Professional dark-themed UI designed for easy navigation. Responsive design that works on all devices from desktop to mobile.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3>Easy Setup</h3>
-                <p>Works immediately with mock data - no API setup required to explore. Configure eBay API credentials when ready for real data access.</p>
+    <section class="info-section white">
+        <div class="container">
+            <div class="info-content">
+                <h2 class="section-title">How it works</h2>
+                <ul class="info-list">
+                    <li><strong>Add your cards</strong> — Catalog your Pokemon card collection</li>
+                    <li><strong>Search eBay</strong> — Find listings for specific Pokemon sets</li>
+                    <li><strong>Analyze pricing</strong> — Compare against current market data</li>
+                    <li><strong>Get recommendations</strong> — Receive intelligent pricing suggestions</li>
+                    <li><strong>Optimize sales</strong> — Price your cards competitively</li>
+                </ul>
             </div>
         </div>
+    </section>
 
-        <div class="info-section">
-            <h2>How It Works</h2>
-            <ul>
-                <li><strong>Add Your Cards:</strong> Catalog your Pokemon card collection with set names, quantities, and conditions</li>
-                <li><strong>Search eBay:</strong> Find "Pick Your Card" listings for specific Pokemon sets</li>
-                <li><strong>Analyze Pricing:</strong> Compare your cards against current market listings</li>
-                <li><strong>Get Recommendations:</strong> Receive pricing suggestions based on market data analysis</li>
-                <li><strong>Optimize Sales:</strong> Use insights to price your cards competitively for maximum sales</li>
-            </ul>
-        </div>
-
-        <div class="info-section">
-            <h2>Technical Stack</h2>
-            <div class="tech-stack">
+    <section class="tech-section">
+        <div class="container">
+            <h2 class="section-title">Built with modern technology</h2>
+            <div class="tech-badges">
                 <span class="tech-badge">Node.js</span>
                 <span class="tech-badge">Express</span>
-                <span class="tech-badge">eBay Browse API</span>
-                <span class="tech-badge">Vanilla JavaScript</span>
-                <span class="tech-badge">HTML5 & CSS3</span>
-                <span class="tech-badge">REST API</span>
+                <span class="tech-badge">eBay API</span>
+                <span class="tech-badge">JavaScript</span>
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3</span>
             </div>
-            <p style="text-align: center; color: #b0b0b0; margin-top: 2rem;">
-                Built with modern web technologies. Open source and free for hobby/non-commercial use.
-            </p>
         </div>
+    </section>
 
-        <div class="info-section">
-            <h2>Quick Start</h2>
-            <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
-                <pre style="color: #e0e0e0; margin: 0; font-family: 'Courier New', monospace; font-size: 0.95rem; overflow-x: auto;"><code>cd pokemon-card-analyzer
-npm install
-npm start</code></pre>
+    <section class="quick-start">
+        <div class="container">
+            <div class="info-content">
+                <h2 class="section-title">Get started in seconds</h2>
+                <div class="code-block">
+                    <code>cd pokemon-card-analyzer</code>
+                    <code>npm install</code>
+                    <code>npm start</code>
+                </div>
+                <p style="text-align: center; font-size: 21px; color: var(--text-secondary);">
+                    Then visit <strong style="color: var(--text-primary);">localhost:3000</strong>
+                </p>
             </div>
-            <p style="text-align: center; color: #b0b0b0; margin-top: 1.5rem;">
-                Then visit <code style="background: rgba(0, 0, 0, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">http://localhost:3000</code> to start analyzing!
-            </p>
         </div>
+    </section>
 
-        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #808080;">
-            <p>Pokemon Card Analyzer - A hobby project for bulk card sales optimization</p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-                Not affiliated with Pokemon, Nintendo, or eBay. For personal/non-commercial use.
+    <footer>
+        <div class="container">
+            <p>Pokemon Card Analyzer</p>
+            <p style="margin-top: 8px; font-size: 12px;">
+                Not affiliated with Pokemon, Nintendo, or eBay. For personal use.
             </p>
         </footer>
     </div>
-
-    <script>
-        // Check if API is configured (would need to check on server)
-        // For now, show mock data status
-        // In production, this could fetch from /api/health endpoint
-        
-        // If you want to check API status dynamically:
-        // fetch('/pokemon-card-analyzer/api/health')
-        //   .then(res => res.json())
-        //   .then(data => {
-        //     const badge = document.getElementById('statusBadge');
-        //     if (data.apiConfigured) {
-        //       badge.classList.add('active');
-        //       badge.querySelector('span:last-child').textContent = 
-        //         `API Configured - ${data.environment} environment`;
-        //     }
-        //   });
-    </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "public": true,
   "builds": [
     {
       "src": "pokemon-card-analyzer/server.js",
@@ -14,6 +15,10 @@
     {
       "src": "/pokemon-card-analyzer/(.*)",
       "dest": "pokemon-card-analyzer/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ]
 }

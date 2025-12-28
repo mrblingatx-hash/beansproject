@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Card Analyzer - eBay Price Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Pokemon Card Analyzer</h1>
+            <p class="subtitle">Analyze eBay listings to optimize your bulk card sales</p>
+            <div class="api-status" id="apiStatus">
+                <span class="status-indicator mock"></span>
+                <span>Using Mock Data - Configure API credentials for real data</span>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="inventory">My Inventory</button>
+            <button class="tab" data-tab="search">Search eBay</button>
+            <button class="tab" data-tab="analysis">Price Analysis</button>
+        </nav>
+
+        <!-- Inventory Tab -->
+        <section id="inventoryTab" class="tab-content active">
+            <div class="section-header">
+                <h2>My Card Inventory</h2>
+                <button class="btn btn-primary" id="addCardBtn">+ Add Card</button>
+            </div>
+
+            <div class="inventory-filters">
+                <input type="text" id="filterSearch" placeholder="Search cards..." class="filter-input">
+                <select id="filterSet" class="filter-select">
+                    <option value="">All Sets</option>
+                </select>
+            </div>
+
+            <div class="inventory-stats" id="inventoryStats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCards">0</div>
+                    <div class="stat-label">Total Cards</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="uniqueCards">0</div>
+                    <div class="stat-label">Unique Cards</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalSets">0</div>
+                    <div class="stat-label">Sets</div>
+                </div>
+            </div>
+
+            <div class="inventory-list" id="inventoryList">
+                <div class="empty-state">
+                    <p>No cards in inventory yet. Add your first card to get started!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Tab -->
+        <section id="searchTab" class="tab-content">
+            <div class="section-header">
+                <h2>Search eBay Listings</h2>
+            </div>
+
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="searchQuery">Search Query</label>
+                    <input type="text" id="searchQuery" placeholder="e.g., pokemon base set pick your card" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="searchCategory">Category</label>
+                    <select id="searchCategory" class="form-select">
+                        <option value="183454">Pokemon Cards</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="searchLimit">Results Limit</label>
+                    <input type="number" id="searchLimit" value="50" min="1" max="200" class="form-input">
+                </div>
+                <button class="btn btn-primary" id="searchBtn">Search eBay</button>
+            </div>
+
+            <div class="search-results" id="searchResults">
+                <div class="empty-state">
+                    <p>Enter a search query and click "Search eBay" to find listings</p>
+                    <div class="mock-data-notice">
+                        <strong>Note:</strong> Currently showing mock data. Configure your eBay API credentials in the .env file to access real listings.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Tab -->
+        <section id="analysisTab" class="tab-content">
+            <div class="section-header">
+                <h2>Price Analysis</h2>
+                <button class="btn btn-primary" id="runAnalysisBtn">Run Analysis</button>
+            </div>
+
+            <div class="analysis-info">
+                <p>Compare your inventory against eBay listings to get pricing recommendations.</p>
+                <div class="api-placeholder">
+                    <h3>🔐 API Integration Required</h3>
+                    <p>To use real eBay data:</p>
+                    <ol>
+                        <li>Register at <a href="https://developer.ebay.com/" target="_blank">eBay Developer Portal</a></li>
+                        <li>Get your Client ID and Client Secret</li>
+                        <li>Add them to <code>.env</code> file:</li>
+                    </ol>
+                    <pre><code>EBAY_CLIENT_ID=your_client_id
+EBAY_CLIENT_SECRET=your_client_secret
+EBAY_ENVIRONMENT=sandbox</code></pre>
+                </div>
+            </div>
+
+            <div class="analysis-results" id="analysisResults">
+                <div class="empty-state">
+                    <p>Click "Run Analysis" to compare your inventory against eBay listings</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Card Modal -->
+    <div id="cardModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Card to Inventory</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="cardForm" class="modal-body">
+                <div class="form-group">
+                    <label for="cardName">Card Name *</label>
+                    <input type="text" id="cardName" required class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="cardSet">Set *</label>
+                    <input type="text" id="cardSet" required class="form-input" placeholder="e.g., Base Set, Jungle, Fossil">
+                </div>
+                <div class="form-group">
+                    <label for="cardQuantity">Quantity *</label>
+                    <input type="number" id="cardQuantity" required min="1" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="cardCondition">Condition</label>
+                    <select id="cardCondition" class="form-select">
+                        <option value="Near Mint">Near Mint</option>
+                        <option value="Lightly Played">Lightly Played</option>
+                        <option value="Moderately Played">Moderately Played</option>
+                        <option value="Heavily Played">Heavily Played</option>
+                        <option value="Damaged">Damaged</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cardNotes">Notes</label>
+                    <textarea id="cardNotes" class="form-textarea" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Card</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

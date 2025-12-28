@@ -26,4 +26,11 @@ Documents/My Videos/
 Cookies/
 Application Data/
 
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Node modules (if adding Node.js dependencies)
+node_modules/
 

@@ -1,0 +1,29 @@
+# System files
+.DS_Store
+Thumbs.db
+*.log
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+AppData/
+Local Settings/
+Recent/
+SendTo/
+Templates/
+NetHood/
+PrintHood/
+Start Menu/
+My Documents/
+Documents/My Music/
+Documents/My Pictures/
+Documents/My Videos/
+Cookies/
+Application Data/
+
+
